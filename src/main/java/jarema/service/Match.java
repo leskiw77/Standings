@@ -6,8 +6,8 @@ package jarema.service;
 
 public class Match {
     public Match(String home, String away) {
-        this.home = home;
-        this.away = away;
+        this.home = home.toUpperCase();
+        this.away = away.toUpperCase();
         played=false;
     }
 
@@ -62,7 +62,7 @@ public class Match {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Match match = (Match) o;
-        if(match.home == home && match.away == away)
+        if(match.home.equals(home) && match.away.equals(away))
             return true;
         return false;
     }

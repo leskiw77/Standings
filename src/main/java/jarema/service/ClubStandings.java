@@ -38,11 +38,6 @@ public class ClubStandings{
 
     public boolean matchPlayed(Match match){
         if(matchesToPlay.isEmpty() || !matchesToPlay.getFirst().equals(match)){
-            //TODO: i tu
-            System.out.println("Byloby niedobrze");
-            System.out.println(matchesToPlay.getFirst().equals(match));
-            System.out.println(matchesToPlay.getFirst());
-            System.out.println(match);
             return false;
         }
 
