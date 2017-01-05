@@ -15,6 +15,20 @@ import java.util.List;
  */
 public class GenerateTeamsForSeason {
     public Clubs generate(int season){
+        Path file = Paths.get("E:\\Dokumenty\\Studia\\Kody\\Java\\project\\src\\main\\java\\ioTest\\file.txt");
+
+        System.out.println("Jestem w generowaniu");
+
+        try (InputStream in = Files.newInputStream(file);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+            String line = reader.readLine().toUpperCase();
+            List<String> list = Arrays.asList(line.split(","));
+            System.out.println(list);
+            return new Clubs(list);
+
+        } catch (IOException x) {
+            System.err.println(x);
+        }
         return null;
     }
 }

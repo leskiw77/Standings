@@ -39,6 +39,8 @@ public class StandingsWriter {
         if(standings == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
 
+
+
         if(! standingsService.teamExists(standingsRequest.getHome(),season)) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
@@ -46,12 +48,16 @@ public class StandingsWriter {
         if(! standingsService.teamExists(standingsRequest.getAway(),season)){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
+
+
         String home = standingsRequest.getHome();
         String away = standingsRequest.getAway();
+
 
         if(standings.matchPlayed(home,away,standingsRequest.getGoalsHome(),standingsRequest.getGoalsAway())){
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.CONFLICT);
+
     }
 }

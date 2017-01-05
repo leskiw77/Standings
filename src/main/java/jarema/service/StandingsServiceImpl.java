@@ -23,7 +23,8 @@ public class StandingsServiceImpl implements StandingsService {
     @Override
     public boolean teamExists(String team, int season) {
         Clubs clubs = standingsRepository.getBySeason(season).getTeams();
-        if (clubs.getList().contains(team))
+        System.out.println(team);
+        if (clubs.getList().contains(team.toUpperCase()))
             return true;
         return false;
     }

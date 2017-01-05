@@ -34,7 +34,7 @@ public class Standings {
 
     public ClubStandings getClubStandingsByName(String clubName){
         for (ClubStandings clubStandings : standings){
-            if(clubStandings.getClubName().equals(clubName))
+            if(clubStandings.getClubName().equals(clubName.toUpperCase()))
                 return clubStandings;
         }
         return null;
@@ -50,17 +50,18 @@ public class Standings {
 
     public boolean matchPlayed(String home, String away, int goalsHome, int goalsAway){
 
-        Match match = new Match(home,away);
+        Match match = new Match(home.toUpperCase(),away.toUpperCase());
         match.setGoals(goalsHome,goalsAway);
 
-        ClubStandings team1 = getClubStandingsByName(match.away);
-        ClubStandings team2 = getClubStandingsByName(match.home);
+        ClubStandings team1 = getClubStandingsByName(away.toUpperCase());
+        ClubStandings team2 = getClubStandingsByName(home.toUpperCase());
         if(team1.getMatchesToPlay().getFirst() != team2.getMatchesToPlay().getFirst()){
             return false;
         }
 
         boolean toRet = team1.matchPlayed(match) && team2.matchPlayed(match);
         sortTeams();
+        System.out.println(toRet);
         return toRet;
     }
 

@@ -58,13 +58,13 @@ public class Match {
 
     @Override
     public boolean equals(Object o) {
+        //TODO: gdzies sie jebie
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Match match = (Match) o;
-
-        if (home != match.home) return false;
-        return away == match.away;
+        if(match.home == home && match.away == away)
+            return true;
+        return false;
     }
 
     @Override

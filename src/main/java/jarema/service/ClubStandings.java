@@ -37,8 +37,14 @@ public class ClubStandings{
     }
 
     public boolean matchPlayed(Match match){
-        if(matchesToPlay.isEmpty() || !matchesToPlay.getFirst().equals(match))
+        if(matchesToPlay.isEmpty() || !matchesToPlay.getFirst().equals(match)){
+            //TODO: i tu
+            System.out.println("Byloby niedobrze");
+            System.out.println(matchesToPlay.getFirst().equals(match));
+            System.out.println(matchesToPlay.getFirst());
+            System.out.println(match);
             return false;
+        }
 
         playedMatches++;
         goalsLoosed += match.loosedBy(clubName);
@@ -62,7 +68,6 @@ public class ClubStandings{
         return true;
     }
 
-
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
@@ -73,8 +78,6 @@ public class ClubStandings{
         stringBuilder.append(points);
         return stringBuilder.toString();
     }
-
-
 
     public String getClubName() {
         return clubName;
