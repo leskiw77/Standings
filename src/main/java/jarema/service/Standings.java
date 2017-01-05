@@ -11,20 +11,30 @@ public class Standings {
     private List<ClubStandings> standings;
     private int season;
 
-    public Standings(int season, int teamsAmount) {
+    private Clubs teams;
+
+    public Standings(int season, int teamsAmount, Clubs clubs) {
         this.season = season;
         this.teamsAmount = teamsAmount;
-        standings = new Generator(Club.values()).generates();
+        this.teams = clubs;
+        this.standings = new Generator(teams.getList()).generates();
+    }
+
+    public Standings(int season, Clubs clubs){
+        this.season = season;
+        this.teams = clubs;
+        this.standings = new Generator(teams.getList()).generates();
     }
 
     public Standings(int season){
         this.season = season;
-        standings = new Generator(Club.values()).generates();
+        this.teams = new GenerateTeamsForSeason().generate(season);
+        this.standings = new Generator(teams.getList()).generates();
     }
 
-    public ClubStandings getClubStandingsByName(Club clubName){
+    public ClubStandings getClubStandingsByName(String clubName){
         for (ClubStandings clubStandings : standings){
-            if(clubStandings.getClubName() == clubName)
+            if(clubStandings.getClubName().equals(clubName))
                 return clubStandings;
         }
         return null;
@@ -38,7 +48,7 @@ public class Standings {
         return season;
     }
 
-    public boolean matchPlayed(Club home, Club away, int goalsHome, int goalsAway){
+    public boolean matchPlayed(String home, String away, int goalsHome, int goalsAway){
 
         Match match = new Match(home,away);
         match.setGoals(goalsHome,goalsAway);
@@ -52,6 +62,10 @@ public class Standings {
         boolean toRet = team1.matchPlayed(match) && team2.matchPlayed(match);
         sortTeams();
         return toRet;
+    }
+
+    public Clubs getTeams() {
+        return teams;
     }
 
     @Override

@@ -1,8 +1,0 @@
-package jarema.service;
-
-/**
- * Created by Jarema on 21.12.2016.
- */
-public enum Club {
-    JAGIELLONIA,LECHIA,LEGIA,TERMALIKA,LECH,ZAGLEBIE,POGON,ARKA,KORONA,WISLA_KRK,WISLA_PLOCK,SLASK,PIAST,CRACOVIA,GORNIK,RUCH
-}

@@ -1,7 +1,6 @@
 package jarema.api;
 
-import jarema.service.Club;
-import jarema.service.Match;
+import jarema.service.Clubs;
 import jarema.service.Standings;
 import jarema.service.StandingsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +39,17 @@ public class StandingsWriter {
         if(standings == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);
 
-        //TODO: moze wyjatek
-        Optional<Club> home = standingsService.teamExists(standingsRequest.getHome());
-        Optional<Club> away = standingsService.teamExists(standingsRequest.getAway());
-
-        if(!home.isPresent() || !away.isPresent()){
+        if(! standingsService.teamExists(standingsRequest.getHome(),season)) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        if(standings.matchPlayed(home.get(),away.get(),standingsRequest.getGoalsHome(),standingsRequest.getGoalsAway())){
+        if(! standingsService.teamExists(standingsRequest.getAway(),season)){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        String home = standingsRequest.getHome();
+        String away = standingsRequest.getAway();
+
+        if(standings.matchPlayed(home,away,standingsRequest.getGoalsHome(),standingsRequest.getGoalsAway())){
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.CONFLICT);

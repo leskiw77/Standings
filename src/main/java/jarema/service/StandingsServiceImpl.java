@@ -4,7 +4,6 @@ import jarema.model.StandingsRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,14 +21,11 @@ public class StandingsServiceImpl implements StandingsService {
     }
 
     @Override
-    public Optional<Club> teamExists(String team) {
-        Club c;
-        try {
-            c = Club.valueOf(team.toUpperCase());
-        }catch (IllegalArgumentException e){
-            return Optional.empty();
-        }
-        return Optional.of(c);
+    public boolean teamExists(String team, int season) {
+        Clubs clubs = standingsRepository.getBySeason(season).getTeams();
+        if (clubs.getList().contains(team))
+            return true;
+        return false;
     }
 
     @Override

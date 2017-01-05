@@ -1,6 +1,5 @@
 package jarema.service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -8,7 +7,7 @@ import java.util.Optional;
  */
 public interface StandingsService {
 
-    public Optional<Club> teamExists(String team);
+    public boolean teamExists(String team, int season);
     public boolean add(Standings standing);
     public boolean remove(Standings standing);
     public Standings getBySeason(int season);

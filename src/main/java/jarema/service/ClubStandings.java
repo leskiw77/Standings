@@ -23,7 +23,7 @@ class ClubsComparator implements Comparator<ClubStandings>{
 
 public class ClubStandings{
 
-    public final Club clubName;
+    public final String clubName;
     private int points;
     private int wins, draws, looses;
     private int goalsScored,goalsLoosed;
@@ -32,7 +32,7 @@ public class ClubStandings{
     private LinkedList<Match> matchesToPlay = new LinkedList<Match>();
     private LinkedList<Match> finishedMatches = new LinkedList<Match>();
 
-    public ClubStandings(Club clubName) {
+    public ClubStandings(String clubName) {
         this.clubName = clubName;
     }
 
@@ -76,7 +76,7 @@ public class ClubStandings{
 
 
 
-    public Club getClubName() {
+    public String getClubName() {
         return clubName;
     }
 
