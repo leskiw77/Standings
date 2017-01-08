@@ -11,20 +11,30 @@ public class Standings {
     private List<ClubStandings> standings;
     private int season;
 
-    public Standings(int season, int teamsAmount) {
+    private Clubs teams;
+
+    public Standings(int season, int teamsAmount, Clubs clubs) {
         this.season = season;
         this.teamsAmount = teamsAmount;
-        standings = new Generator(Club.values()).generates();
+        this.teams = clubs;
+        this.standings = new Generator(teams.getList()).generates();
+    }
+
+    public Standings(int season, Clubs clubs){
+        this.season = season;
+        this.teams = clubs;
+        this.standings = new Generator(teams.getList()).generates();
     }
 
     public Standings(int season){
         this.season = season;
-        standings = new Generator(Club.values()).generates();
+        this.teams = new GenerateTeamsForSeason().generate(season);
+        this.standings = new Generator(teams.getList()).generates();
     }
 
-    public ClubStandings getClubStandingsByName(Club clubName){
+    public ClubStandings getClubStandingsByName(String clubName){
         for (ClubStandings clubStandings : standings){
-            if(clubStandings.getClubName() == clubName)
+            if(clubStandings.getClubName().equals(clubName.toUpperCase()))
                 return clubStandings;
         }
         return null;
@@ -38,20 +48,25 @@ public class Standings {
         return season;
     }
 
-    public boolean matchPlayed(Club home, Club away, int goalsHome, int goalsAway){
+    public boolean matchPlayed(String home, String away, int goalsHome, int goalsAway){
 
-        Match match = new Match(home,away);
+        Match match = new Match(home.toUpperCase(),away.toUpperCase());
         match.setGoals(goalsHome,goalsAway);
 
-        ClubStandings team1 = getClubStandingsByName(match.away);
-        ClubStandings team2 = getClubStandingsByName(match.home);
+        ClubStandings team1 = getClubStandingsByName(away.toUpperCase());
+        ClubStandings team2 = getClubStandingsByName(home.toUpperCase());
         if(team1.getMatchesToPlay().getFirst() != team2.getMatchesToPlay().getFirst()){
             return false;
         }
 
         boolean toRet = team1.matchPlayed(match) && team2.matchPlayed(match);
         sortTeams();
+        System.out.println(toRet);
         return toRet;
+    }
+
+    public Clubs getTeams() {
+        return teams;
     }
 
     @Override

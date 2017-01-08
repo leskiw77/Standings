@@ -5,16 +5,16 @@ package jarema.service;
  */
 
 public class Match {
-    public Match(Club home, Club away) {
-        this.home = home;
-        this.away = away;
+    public Match(String home, String away) {
+        this.home = home.toUpperCase();
+        this.away = away.toUpperCase();
         played=false;
     }
 
     boolean played;
 
-    public final Club home;
-    public final Club away;
+    public final String home;
+    public final String away;
 
     private int homeGoals;
     private int awayGoals;
@@ -25,22 +25,22 @@ public class Match {
         played = true;
     }
 
-    public int scoredBy(Club c){
-        if(c == home)
+    public int scoredBy(String c){
+        if(c.equals(home))
             return homeGoals;
         else
             return awayGoals;
     }
 
-    public int loosedBy(Club c){
-        if(c == home)
+    public int loosedBy(String c){
+        if(c.equals(home))
             return awayGoals;
         else
             return homeGoals;
     }
 
-    public int pointReachBy(Club c){
-        if(c == home){
+    public int pointReachBy(String c){
+        if(c.equals(home)){
             if(homeGoals>awayGoals)
                 return 3;
             if(homeGoals==awayGoals)
@@ -58,13 +58,13 @@ public class Match {
 
     @Override
     public boolean equals(Object o) {
+        //TODO: gdzies sie jebie
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Match match = (Match) o;
-
-        if (home != match.home) return false;
-        return away == match.away;
+        if(match.home.equals(home) && match.away.equals(away))
+            return true;
+        return false;
     }
 
     @Override

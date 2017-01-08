@@ -35,36 +35,36 @@ public class StandingsReader {
     @RequestMapping(value = "{season}/next")
     public ResponseEntity<String> nextMatchForTeam(@PathVariable int season, @RequestParam(value = "name" ) String name,
                                                    @RequestParam(value = "howMany") int howMany){
-        Optional<Club> club = standingsService.teamExists(name);
 
-        if(!club.isPresent())
-            return new ResponseEntity(HttpStatus.CONFLICT);
-
-        Standings s = standingsService.getBySeason(season);
-        if(s == null){
+        Standings standings = standingsService.getBySeason(season);
+        if(standings == null){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        List <Match> list = s.getClubStandingsByName(club.get()).getNext(howMany);
 
-        return new ResponseEntity<>(list.toString(),HttpStatus.OK);
+        if(! standingsService.teamExists(name,season)){
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+
+        List <Match> matches = standings.getClubStandingsByName(name).getNext(howMany);
+        return new ResponseEntity(matches.toString(),HttpStatus.OK);
+
     }
 
     @RequestMapping(value = "{season}/played")
     public ResponseEntity<String> playedMatchForTeam(@PathVariable int season, @RequestParam(value = "name" ) String name,
                                                    @RequestParam(value = "howMany") int howMany){
-        Optional<Club> club;
-        club = standingsService.teamExists(name);
 
-        if(!club.isPresent())
-            return new ResponseEntity(HttpStatus.CONFLICT);
-
-        Standings s = standingsService.getBySeason(season);
-        if(s == null){
+        Standings standings = standingsService.getBySeason(season);
+        if(standings == null){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        List <Match> list = s.getClubStandingsByName(club.get()).getPlayed(howMany);
 
-        return new ResponseEntity<>(list.toString(),HttpStatus.OK);
+        if(! standingsService.teamExists(name,season)){
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+
+        List <Match> matches = standings.getClubStandingsByName(name).getPlayed(howMany);
+        return new ResponseEntity(matches.toString(),HttpStatus.OK);
     }
 
 }

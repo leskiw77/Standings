@@ -23,7 +23,7 @@ class ClubsComparator implements Comparator<ClubStandings>{
 
 public class ClubStandings{
 
-    public final Club clubName;
+    public final String clubName;
     private int points;
     private int wins, draws, looses;
     private int goalsScored,goalsLoosed;
@@ -32,13 +32,14 @@ public class ClubStandings{
     private LinkedList<Match> matchesToPlay = new LinkedList<Match>();
     private LinkedList<Match> finishedMatches = new LinkedList<Match>();
 
-    public ClubStandings(Club clubName) {
+    public ClubStandings(String clubName) {
         this.clubName = clubName;
     }
 
     public boolean matchPlayed(Match match){
-        if(matchesToPlay.isEmpty() || !matchesToPlay.getFirst().equals(match))
+        if(matchesToPlay.isEmpty() || !matchesToPlay.getFirst().equals(match)){
             return false;
+        }
 
         playedMatches++;
         goalsLoosed += match.loosedBy(clubName);
@@ -62,7 +63,6 @@ public class ClubStandings{
         return true;
     }
 
-
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
@@ -74,9 +74,7 @@ public class ClubStandings{
         return stringBuilder.toString();
     }
 
-
-
-    public Club getClubName() {
+    public String getClubName() {
         return clubName;
     }
 

@@ -1,6 +1,14 @@
 package jarema.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,18 +16,16 @@ import java.util.List;
  * Created by Jarema on 22.12.2016.
  */
 public class Generator {
-    private List<Club> clubs = new LinkedList<Club>();
+    private List<String> clubs;
     private List<ClubStandings> standings = new ArrayList<ClubStandings>();
 
-    public Generator(Club[] values) {
-        for (Club c : values){
-            clubs.add(c);
-        }
+    public Generator(List <String> list) {
+        clubs = list;
     }
 
 
     public List<ClubStandings> generates(){
-        for(Club club : clubs){
+        for(String club : clubs){
             standings.add(new ClubStandings(club));
         }
 
@@ -30,8 +36,8 @@ public class Generator {
 
     private void genrateRounds(){
         int n=standings.size();
-        LinkedList<Club> first = new LinkedList<Club>();
-        LinkedList<Club> second = new LinkedList<Club>();
+        LinkedList<String> first = new LinkedList<>();
+        LinkedList<String> second = new LinkedList<>();
 
         for (int i=0;i<(n/2);i++){
             first.addLast(clubs.get(i));
@@ -52,7 +58,7 @@ public class Generator {
         }
     }
 
-    private ClubStandings getClubStandingByName(Club name){
+    private ClubStandings getClubStandingByName(String name){
         for (ClubStandings club : standings){
             if(club.getClubName() == name)
                 return club;
@@ -60,10 +66,10 @@ public class Generator {
         return null;
     }
 
-    private void addMatchesInRound(List<Club> club1, List<Club> club2){
+    private void addMatchesInRound(List<String> club1, List<String> club2){
         for (int i=0;i<club1.size();i++){
-            Club first = club1.get(i);
-            Club second= club2.get(i);
+            String first = club1.get(i);
+            String second= club2.get(i);
             Match firstMatch = new Match(first,second);
             Match secondMatch = new Match(second,first);
 
@@ -76,10 +82,20 @@ public class Generator {
     }
 
     public static void main(String [] args){
-        Generator generator = new Generator(Club.values());
-        List<ClubStandings> list = generator.generates();
+        Path file = Paths.get("E:\\Dokumenty\\Studia\\Kody\\Java\\project\\src\\main\\java\\ioTest\\file.txt");
 
-        System.out.println(list.get(0).getMatchesToPlay());
+
+        try (InputStream in = Files.newInputStream(file)) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+                String line = reader.readLine();
+                List<String> list = Arrays.asList(line.split(","));
+                System.out.println(list);
+                new Generator(list).generates();
+
+            }
+        } catch (IOException x) {
+            System.err.println(x);
+        }
 
     }
 }
