@@ -28,7 +28,7 @@ public class Standings {
 
     public Standings(int season){
         this.season = season;
-        this.teams = new GenerateTeamsForSeason().generate(season);
+        this.teams = new ClubsReaderWriter().read(season);
         this.standings = new Generator(teams.getList()).generates();
     }
 

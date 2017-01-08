@@ -43,4 +43,14 @@ public class StandingsServiceImpl implements StandingsService {
     public Standings getBySeason(int season) {
         return standingsRepository.getBySeason(season);
     }
+
+    @Override
+    public Clubs readClubsFromFile(int season) {
+        return new ClubsReaderWriter().read(season);
+    }
+
+    @Override
+    public boolean writeClubsToFile(int season, String str) {
+        return new ClubsReaderWriter().write(season,str);
+    }
 }

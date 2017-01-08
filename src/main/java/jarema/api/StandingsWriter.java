@@ -27,7 +27,10 @@ public class StandingsWriter {
 
     @RequestMapping(value = "create")
     public ResponseEntity createStandings(@RequestParam(value = "season") int season){
-        if(standingsService.add(new Standings(season)))
+        Clubs clubs = standingsService.readClubsFromFile(season);
+        if (clubs == null)
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if(standingsService.add(new Standings(season,clubs)))
             return new ResponseEntity(HttpStatus.CREATED);
         return new ResponseEntity(HttpStatus.CONFLICT);
     }
@@ -59,5 +62,12 @@ public class StandingsWriter {
         }
         return new ResponseEntity(HttpStatus.CONFLICT);
 
+    }
+
+    @RequestMapping(value = "clubsInSeason/{season}")
+    public ResponseEntity clubsInSeason(@PathVariable int season,@RequestBody String clubStr){
+        if(standingsService.writeClubsToFile(season,clubStr))
+            return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }

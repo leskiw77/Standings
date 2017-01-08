@@ -7,9 +7,11 @@ import java.util.Optional;
  */
 public interface StandingsService {
 
-    public boolean teamExists(String team, int season);
-    public boolean add(Standings standing);
-    public boolean remove(Standings standing);
-    public Standings getBySeason(int season);
+    boolean teamExists(String team, int season);
+    boolean add(Standings standing);
+    boolean remove(Standings standing);
+    Standings getBySeason(int season);
+    Clubs readClubsFromFile(int season);
+    boolean writeClubsToFile(int season, String str);
 
 }
