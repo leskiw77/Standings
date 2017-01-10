@@ -15,7 +15,6 @@ public class StandingsRepositoryImpl implements StandingsRepository {
 
     private Set<Standings> set = new HashSet<>();
 
-
     @Override
     public Standings getBySeason(int season) {
         for (Standings standing : set){
@@ -31,10 +30,8 @@ public class StandingsRepositoryImpl implements StandingsRepository {
             if(stands.equals(standing))
                 return false;
         }
-
         set.add(standing);
         return true;
-
     }
 
     @Override

@@ -58,7 +58,6 @@ public class Match {
 
     @Override
     public boolean equals(Object o) {
-        //TODO: gdzies sie jebie
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Match match = (Match) o;

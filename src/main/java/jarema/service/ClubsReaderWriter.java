@@ -46,11 +46,4 @@ public class ClubsReaderWriter {
         }
     }
 
-
-    public static void main(String [] args){
-        new ClubsReaderWriter().write(2016,"asdad");
-        new ClubsReaderWriter().read(2016);
-
-    }
-
 }
